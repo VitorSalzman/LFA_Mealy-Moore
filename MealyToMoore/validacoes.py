@@ -22,86 +22,90 @@
 #  
 #  
 
-#Função responsável por ler o arquivo de entrada, retorna uma lista com todas as linhas
+# Função responsável por ler o arquivo de entrada, retorna uma lista com todas as linhas
 def readFile(arquivo):
-	try{
-	arq = open("%s" %arquivo, 'r')
-	}
-	lst=[]
-	lst=arq.readlines()
-	arq.close()
-	return lst
-	
-def writeFile(lst,arquivo):
-	arq = open("%s" %arquivo, 'w')
-	writeSucess = False
-	for x in lst:
-		arq.write(x)
-		writeSucess = True
-	
-	arq.close()
-	
-	return writeSucess
-	
+    try:
+        arq = open("%s" % arquivo, 'r')
+    except:
+        print("Erro ao abrir o arquivo de leitura.")
+
+    lst = []
+    lst = arq.readlines()
+    arq.close()
+    return lst
+
+
+# Função de saída do programa, escreve no arquivo pré-definido; retorna um boolean quando a escrita é feita com sucesso
+def writeFile(lst, arquivo):
+    try:
+        arq = open("%s" % arquivo, 'w')
+    except:
+        print("Erro ao abrir o arquivo de escrita.")
+
+    writeSucess = False
+    for x in lst:
+        arq.write(x)
+        writeSucess = True
+
+    arq.close()
+
+    return writeSucess
+
+
 def toDictionary(lst):
-	
-	dic={}
-	lstaux=lst[1].split()
-	lstin=[]
-	for x in range(1,len(lstaux),1):
-		lstin.append(lstaux[x])
-		
-	lstaux=lst[2].split()
-	lstout=[]
-	for x in range(1,len(lstaux),1):
-		lstout.append(lstaux[x])
-		
-	lstaux=lst[3].split()
-	lststates=[]
-	for x in range(1,len(lstaux),1):
-		lststates.append(lstaux[x])	
-	
-	lstaux=lst[5].split()
-	lstfinals=[]
-	for x in range(1,len(lstaux),1):
-		lstfinals.append(lstaux[x])	
-	
-	
-	lsttrans=[]
-	lstaux=lst[7].split()
-	for x in range(0,len(lstaux),1):
-		lsttrans.append(lstaux[x])
-	if(len(lst[8])>1):    #isto pois um len maior que 1 caracteriza outra linha de transições. Um len igual a 1 caracteriza a linha "out"
-		lstaux=lst[8].split()
-		for x in range(0,len(lstaux),1):
-			lsttrans.append(lstaux[x])	
-			
-				
-	dic['symbols-in'] = lstin
-	dic['symbols-out'] = lstout
-	dic['states'] = lststates
-	dic['start'] = lst[4][1]
-	dic['finals'] = lstfinals
-	dic['trans'] = lsttrans
-	
-	return dic
-	#Falta tratar as saídas de estados de máquinas de Moore
-	
+    dic = {}
+    lstaux = lst[1].split()
+    lstin = []
+    for x in range(1, len(lstaux), 1):
+        lstin.append(lstaux[x])
 
+    lstaux = lst[2].split()
+    lstout = []
+    for x in range(1, len(lstaux), 1):
+        lstout.append(lstaux[x])
+
+    lstaux = lst[3].split()
+    lststates = []
+    for x in range(1, len(lstaux), 1):
+        lststates.append(lstaux[x])
+
+    lstaux = lst[5].split()
+    lstfinals = []
+    for x in range(1, len(lstaux), 1):
+        lstfinals.append(lstaux[x])
+
+    lsttrans = []
+    lstaux = lst[7].split()
+    for x in range(0, len(lstaux), 1):
+        lsttrans.append(lstaux[x])
+    if (len(lst[
+                8]) > 1):  # isto pois um len maior que 1 caracteriza outra linha de transições. Um len igual a 1 caracteriza a linha "out"
+        lstaux = lst[8].split()
+        for x in range(0, len(lstaux), 1):
+            lsttrans.append(lstaux[x])
+
+    dic['symbols-in'] = lstin
+    dic['symbols-out'] = lstout
+    dic['states'] = lststates
+    dic['start'] = lst[4][1]
+    dic['finals'] = lstfinals
+    dic['trans'] = lsttrans
+
+    return dic
+
+
+# Falta tratar as saídas de estados de máquinas de Moore
+
+# Verifica se a máquina passada na lista é do tipo Mealy
 def isMealy(lst):
-	if(str(lst[0][2])=="e"):
-		return True
-	else:
-		return False
-		
-def isMoore(lst):
-	
-	if(str(lst[0][2])=="o"):
-		return True
-	else:
-		return False
-							
-	
-if __name__ == '__main__':
-	main()
+    if str(lst[0]).lower() == "mealy":
+        return True
+    else:
+        return False
 
+# Verifica se a máquina passada na lista é do tipo Moore
+def isMoore(lst):
+    if str(lst[0]).lower() == "moore":
+        return True
+    else:
+        return False
