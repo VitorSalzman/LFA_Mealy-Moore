@@ -54,47 +54,35 @@ def writeFile(lst, arquivo):
 
 def toDictionary(lst):
     dic = {}
-    lstaux = lst[1].split()
-    lstin = []
-    for x in range(1, len(lstaux), 1):
-        lstin.append(lstaux[x])
+    
 
-    lstaux = lst[2].split()
-    lstout = []
-    for x in range(1, len(lstaux), 1):
-        lstout.append(lstaux[x])
-
-    lstaux = lst[3].split()
-    lststates = []
-    for x in range(1, len(lstaux), 1):
-        lststates.append(lstaux[x])
-
-    lstaux = lst[5].split()
-    lstfinals = []
-    for x in range(1, len(lstaux), 1):
-        lstfinals.append(lstaux[x])
-
-    lsttrans = []
-    lstaux = lst[7].split()
-    for x in range(0, len(lstaux), 1):
-        lsttrans.append(lstaux[x])
-    if (len(lst[
-                8]) > 1):  # isto pois um len maior que 1 caracteriza outra linha de transições. Um len igual a 1 caracteriza a linha "out"
-        lstaux = lst[8].split()
-        for x in range(0, len(lstaux), 1):
-            lsttrans.append(lstaux[x])
-
-    dic['symbols-in'] = lstin
-    dic['symbols-out'] = lstout
-    dic['states'] = lststates
-    dic['start'] = lst[4][1]
-    dic['finals'] = lstfinals
-    dic['trans'] = lsttrans
+    dic['symbols-in'] = lst[1][1:]
+	dic['symbols-out'] = lst[2][1:]
+	dic['states'] = lst[3][1:]
+	dic['start'] = lst[4][1:]
+	dic['finals'] = lst[5][1:]
+	dic['trans'] = lst[7][:]
+	if(isMoore(lst)):
+		dic['out_fn']= lst[8][0:]
 
     return dic
 
+def validMachine(lst):
+	try:
+		test = 100
+		typeMachine = lst[0]
+		test = lst[1].index('symbols-in')
+		test = lst[2].index('symbols-out')
+		test = lst[3].index('states')
+		test = lst[4].index('start')
+		test = lst[5].index('finals')
+		test = lst[6].index('trans')
+		if typeMachine.lower() == "moore":
+			test = lst[7].index('out-fn')
+		return True
+	except ValueError:
+		return False
 
-# Falta tratar as saídas de estados de máquinas de Moore
 
 # Verifica se a máquina passada na lista é do tipo Mealy
 def isMealy(lst):
