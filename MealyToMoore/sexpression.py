@@ -90,7 +90,7 @@ if __name__ == '__main__':
                 ( out-fn
                 ( q0 ( ) ) ( q0' 1) ( q1 0)
                 ( q2 1) ( q3 0) ( q3' 1 ) ) )'''
-    print('Input S-expression: %r' % (sexp2,))
+    print('\n\nInput S-expression: %r' % (sexp2,))
     parsed = parse_sexp(sexp2)
     print("\nParsed to Python:", parsed)
 

@@ -14,30 +14,52 @@
       <file leaf-file-name="sexpression.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sexpression.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+            <state relative-caret-position="339">
+              <caret line="92" column="15" lean-forward="false" selection-start-line="92" selection-start-column="15" selection-end-line="92" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="validacoes.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/validacoes.py">
+      <file leaf-file-name="functions.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="93" column="14" lean-forward="true" selection-start-line="93" selection-start-column="14" selection-end-line="93" selection-end-column="14" />
+            <state relative-caret-position="402">
+              <caret line="50" column="4" lean-forward="false" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/sexpression.py" />
         <option value="$PROJECT_DIR$/validacoes.py" />
+        <option value="$PROJECT_DIR$/venv/tstescroto.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/functions.py" />
       </list>
     </option>
   </component>
@@ -45,6 +67,25 @@
     <option name="x" value="139" />
     <option name="width" value="1400" />
     <option name="height" value="1038" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>PyPep8Inspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -91,7 +132,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.validacoes">
+  <component name="RunManager" selected="Python.sexpression">
     <configuration name="sexpression" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -110,6 +151,24 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="tstescroto" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="MealyToMoore" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/tstescroto.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="validacoes" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -122,20 +181,22 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="MealyToMoore" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/validacoes.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Serenna\Documents\GitHub\POO1\LFA_Mealy-Moore\MealyToMoore\functions.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.sexpression" />
       <item index="1" class="java.lang.String" itemvalue="Python.validacoes" />
+      <item index="2" class="java.lang.String" itemvalue="Python.tstescroto" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.validacoes" />
-        <item index="1" class="java.lang.String" itemvalue="Python.sexpression" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.sexpression" />
+        <item index="1" class="java.lang.String" itemvalue="Python.tstescroto" />
+        <item index="2" class="java.lang.String" itemvalue="Python.validacoes" />
       </list>
     </recent_temporary>
   </component>
@@ -221,20 +282,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/validacoes.py" />
+    <entry file="file://$PROJECT_DIR$/functions.py" />
     <entry file="file://$PROJECT_DIR$/Main" />
-    <entry file="file://$PROJECT_DIR$/sexpression.py">
+    <entry file="file://$PROJECT_DIR$/venv/tstescroto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        <state relative-caret-position="126">
+          <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/validacoes.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="93" column="14" lean-forward="true" selection-start-line="93" selection-start-column="14" selection-end-line="93" selection-end-column="14" />
+        <state relative-caret-position="399">
+          <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sexpression.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="92" column="15" lean-forward="false" selection-start-line="92" selection-start-column="15" selection-end-line="92" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="50" column="4" lean-forward="false" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
           <folding />
         </state>
       </provider>
