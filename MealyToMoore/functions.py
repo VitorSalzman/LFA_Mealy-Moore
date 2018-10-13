@@ -14,7 +14,7 @@ def readFile(arquivo):
     return lstMaq
 
 
-# Função de saída do programa, escreve no arquivo pré-definido; 
+# Função de saída do programa, escreve no arquivo pré-definido;
 def writeFile(lst, arquivo):
     try:
         arq = open("%s" % arquivo, 'w')

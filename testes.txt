@@ -1,0 +1,22 @@
+(moore
+( symbols-in 0 1)
+( symbols-out 0 1)
+( states A B C D E F G H I)
+( start A )
+( finals I )
+( trans
+( A B 1 ) ( A D 0 ) ( B E 0 ) ( B C 1 ) ( C C 1 ) ( C F 0 ) 
+( D G 0 ) ( D E 1 ) ( E F 1 ) ( E H 0) ( F F 1 ) ( F I 0 )
+( G H 1 ) ( G G 0 ) ( H I 1 ) ( H H 0 ) ( I I 1 ) ( I I 0 )
+)
+( out-fn
+( A 0 ) ( B 0 ) ( C 0 ) ( D 0 ) ( E 0 ) ( F 0 ) ( G 0 ) 
+( H 0 ) ( I 1 ) )
+
+(moore
+( symbols-in 0 0)
+( symbols-out 0 1)
+( states A B C D E F G H I)
+( start A )
+( finals I )
+( trans
