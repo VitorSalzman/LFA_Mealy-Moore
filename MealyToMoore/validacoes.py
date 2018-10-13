@@ -22,9 +22,11 @@
 #  
 #  
 
+#Função responsável por ler o arquivo de entrada, retorna uma lista com todas as linhas
 def readFile(arquivo):
+	try{
 	arq = open("%s" %arquivo, 'r')
-	
+	}
 	lst=[]
 	lst=arq.readlines()
 	arq.close()
