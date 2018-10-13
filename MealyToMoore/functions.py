@@ -14,22 +14,18 @@ def readFile(arquivo):
     return lstMaq
 
 
-# Função de saída do programa, escreve no arquivo pré-definido; retorna um boolean quando a escrita é feita com sucesso
+# Função de saída do programa, escreve no arquivo pré-definido; 
 def writeFile(lst, arquivo):
     try:
         arq = open("%s" % arquivo, 'w')
     except:
         print("Erro ao abrir o arquivo de escrita.")
-
-    writeSucess = False
-    for x in lst:
-        arq.write(x)
-        writeSucess = True
+    try:
+       arq.write(print_sexp(lst))
+    except:
+        print("Erro na escrita")
 
     arq.close()
-
-    return writeSucess
-
 
 # Recebe uma lista e transforma em um dicionário (valores das chaves serão listas)
 # Decisão de projeto para maior facilidade de manipulação
@@ -48,7 +44,7 @@ def toList(dict):
     lstOut =[]
     aux = []
     lstOut.append(dict['type'])
-    
+
 
 
 
