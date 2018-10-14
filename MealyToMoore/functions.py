@@ -91,28 +91,27 @@ def isConversible(mooMachine):
 
 # Recebe um dicionário no formato Moore e retorna um dicionário no formato Mealy
 def mooreToMealy(mooMachine):
-	if isConversible(mooMachine):
-		lstoldtrans=mooMachine['trans']
-		lstoutfn=mooMachine['out-fn']
-		lstnewtrans=[]
-		dic=mooMachine.copy()
-		
-		j=0;
-		for i in lstoldtrans:
-			for j in lstoutfn:
-				if i[1] == j[0]:              				#Encontrando o estado de transição-destino equivalente ao estado com saída
-					if j[1] != []:           			 	#Tratando estados sem saídas vazias               
-						lstnewtrans.append((i[0],i[1],i[2],j[1]))
-					else:                     				#OBS: saídas vazias não são representadas na nova função de transição
-						lstnewtrans.append(i)      
-		
-		#atualizando o novo dicionário
-		del(dic['trans'])
-		del(dic['out-fn'])
-		dic['trans']=lstnewtrans
-		
-		return dic 			
-				
+    if isConversible(mooMachine):
+        lstoldtrans=mooMachine['trans']     # Transições de Moore
+        lstoutfn=mooMachine['out-fn']       # Saídas de cada estado
+        lstnewtrans=[]                      # Lista com novas transições
+        dic=mooMachine.copy()               # Copia a máquina, os únicos campos a serem tratados são trans e out-fn
+
+        # Percorre as listas de transição de Moore
+        for i in lstoldtrans:
+            # Percorre as listas com as saídas de cada estado
+            for j in lstoutfn:
+                # Verifica o estado-destino da transição e adiciona sua saída na transição de Mealy
+                if i[1] == j[0]:
+                    lstnewtrans.append((i[0],i[1],i[2],j[1]))
+
+        # Atualizando o novo dicionário
+        del(dic['trans'])
+        del(dic['out-fn'])
+        dic['trans']=lstnewtrans
+
+        return dic
+
     else:
         print ('Não foi possível fazer conversão. Verifique se há saída no estado inicial.')
         return mooMachine
@@ -128,52 +127,52 @@ def mealyToMoore(meaMachine):
         lst=[]
         
         for x in lstoldstates:
-			if(x[0] == meaMachine['start']:
-				x.append('()')
-				
-		for x in meaMachine['trans']:
-			for y in lstoldstates:
-				if(x[1]	== y[0] and x[3] not in state):
-					y.append(x[3])
-		
-		aux = 0
-		for x in lstoldstates:
-			if(len(lstoldstates[aux])== 1):
-			   lstoldstates[aux].append('()')
-			elif(len(lstoldstates[aux]) > 2):
-				strinaux = ''
-				for y in lstoldstates[aux]:
-					if(y[:1] != 'q'): 
-						lstoldstates[aux][0] += strinaux #incrementa o a string para diferenciar
-						lstoldstates.append([lstoldstates[aux][0],y]) #adiciona no aux no seguinte formato [estado,val]
-						str_aux += '`'
-				del lstoldstates[aux] 
-				continue 
-			aux += 1
+            if(x[0] == meaMachine['start']:
+                x.append('()')
 
-		for x in lstoldstates: 
-			dic['out-fn']=[]
-			dic('out-fn'].append(x)
-		
+        for x in meaMachine['trans']:
+            for y in lstoldstates:
+                if(x[1]	== y[0] and x[3] not in state):
+                    y.append(x[3])
 
-		for x in lstoldstates:
-			dic['states'].append(x[0])
+        aux = 0
+        for x in lstoldstates:
+            if(len(lstoldstates[aux])== 1):
+               lstoldstates[aux].append('()')
+            elif(len(lstoldstates[aux]) > 2):
+                strinaux = ''
+                for y in lstoldstates[aux]:
+                    if(y[:1] != 'q'):
+                        lstoldstates[aux][0] += strinaux #incrementa o a string para diferenciar
+                        lstoldstates.append([lstoldstates[aux][0],y]) #adiciona no aux no seguinte formato [estado,val]
+                        str_aux += '`'
+                del lstoldstates[aux]
+                continue
+            aux += 1
 
-		for x in meaMachine['finals']:
-			for y in meaMachine['out-fn']:
-				if (x == y[0][:2]):
-					dic['finals'].append(y[0])
+        for x in lstoldstates:
+            dic['out-fn']=[]
+            dic('out-fn'].append(x)
 
-		for x in dic['states']:
-			for y in meaMachine['trans']:
-				for z in dic['out-fn']:
-					if(x[:2] == y[0][:2]): 
-						if(y[1] == z[0][:2] and y[3] == z[1]):
-							dic['trans'].append([x,z[0],y[2]])
-						
-		return dic			
-							
-					
-			
+
+        for x in lstoldstates:
+            dic['states'].append(x[0])
+
+        for x in meaMachine['finals']:
+            for y in meaMachine['out-fn']:
+                if (x == y[0][:2]):
+                    dic['finals'].append(y[0])
+
+        for x in dic['states']:
+            for y in meaMachine['trans']:
+                for z in dic['out-fn']:
+                    if(x[:2] == y[0][:2]):
+                        if(y[1] == z[0][:2] and y[3] == z[1]):
+                            dic['trans'].append([x,z[0],y[2]])
+
+        return dic
+
+
+
     else:
         print ('Não foi possível fazer conversão. Tipo de máquina inválido.')
