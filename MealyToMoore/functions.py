@@ -120,7 +120,7 @@ def mooreToMealy(mooMachine):
 # Recebe um dicionário no formato Mealy e retorna um dicionário no formato Moore
 def mealyToMoore(meaMachine):
     if isMealy([meaMachine['type']]):
-        dic=copy(meaMachine)
+        dic = meaMachine.copy()
         del(dic['trans'])
         lstoldstates=meaMachine['states']
         
