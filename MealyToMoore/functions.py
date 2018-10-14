@@ -126,51 +126,106 @@ def mealyToMoore(meaMachine):
         
         lst=[]
         
-        for x in lstoldstates:
-            if(x[0] == meaMachine['start']:
-                x.append('()')
-
-        for x in meaMachine['trans']:
-            for y in lstoldstates:
-                if(x[1]	== y[0] and x[3] not in state):
-                    y.append(x[3])
-
-        aux = 0
-        for x in lstoldstates:
-            if(len(lstoldstates[aux])== 1):
-               lstoldstates[aux].append('()')
-            elif(len(lstoldstates[aux]) > 2):
-                strinaux = ''
-                for y in lstoldstates[aux]:
-                    if(y[:1] != 'q'):
-                        lstoldstates[aux][0] += strinaux #incrementa o a string para diferenciar
-                        lstoldstates.append([lstoldstates[aux][0],y]) #adiciona no aux no seguinte formato [estado,val]
-                        str_aux += '`'
-                del lstoldstates[aux]
-                continue
-            aux += 1
-
-        for x in lstoldstates:
-            dic['out-fn']=[]
-            dic('out-fn'].append(x)
-
-
-        for x in lstoldstates:
-            dic['states'].append(x[0])
-
-        for x in meaMachine['finals']:
-            for y in meaMachine['out-fn']:
-                if (x == y[0][:2]):
-                    dic['finals'].append(y[0])
-
-        for x in dic['states']:
-            for y in meaMachine['trans']:
-                for z in dic['out-fn']:
-                    if(x[:2] == y[0][:2]):
-                        if(y[1] == z[0][:2] and y[3] == z[1]):
-                            dic['trans'].append([x,z[0],y[2]])
+        # for x in lstoldstates:
+        #     if(x[0] == meaMachine['start']:
+        #         x.append('()')
+        #
+        # for x in meaMachine['trans']:
+        #     for y in lstoldstates:
+        #         if(x[1]	== y[0] and x[3] not in state):
+        #             y.append(x[3])
+        #
+        # aux = 0
+        # for x in lstoldstates:
+        #     if(len(lstoldstates[aux])== 1):
+        #        lstoldstates[aux].append('()')
+        #     elif(len(lstoldstates[aux]) > 2):
+        #         strinaux = ''
+        #         for y in lstoldstates[aux]:
+        #             if(y[:1] != 'q'):
+        #                 lstoldstates[aux][0] += strinaux #incrementa o a string para diferenciar
+        #                 lstoldstates.append([lstoldstates[aux][0],y]) #adiciona no aux no seguinte formato [estado,val]
+        #                 str_aux += '`'
+        #         del lstoldstates[aux]
+        #         continue
+        #     aux += 1
+        #
+        # for x in lstoldstates:
+        #     dic['out-fn']=[]
+        #     dic('out-fn'].append(x)
+        #
+        #
+        # for x in lstoldstates:
+        #     dic['states'].append(x[0])
+        #
+        # for x in meaMachine['finals']:
+        #     for y in meaMachine['out-fn']:
+        #         if (x == y[0][:2]):
+        #             dic['finals'].append(y[0])
+        #
+        # for x in dic['states']:
+        #     for y in meaMachine['trans']:
+        #         for z in dic['out-fn']:
+        #             if(x[:2] == y[0][:2]):
+        #                 if(y[1] == z[0][:2] and y[3] == z[1]):
+        #                     dic['trans'].append([x,z[0],y[2]])
 
         return dic
+
+
+
+    else:
+        print ('Não foi possível fazer conversão. Tipo de máquina inválido.')
+
+# Função auxiliar para tratar a criação de novos estados na conversão de Me pra Mo
+def _estadosMoore(meaMachine):
+    newStates = []  # Lista que guardará novos estados criados
+    finalStates = [] # Lista com novos estados finais
+    out_fn = []     # Lista com relação estado/saída
+
+    # Percorre todos os estados
+    for i in meaMachine['states']:
+        saidas = []
+        # Percorre todos os "estados-destino" das transições
+        for j in meaMachine['trans'][1]:
+            # Ao achar o estado atual como destino de uma transição, pega-se a saída
+            if i == j:
+                if meaMachine['trans'][3] not in saidas:        # Sem repetí-la
+                    saidas.append(meaMachine['trans'][3])
+        # Caso um estado seja destino de mais de uma saída das transições de mealy, cria-se novos estados para cada saída distinta
+        if len(saidas) > 1:
+            apost = "\'"        # Apóstrofo para diferenciar novos estados
+            out_fn.append([i, saidas[0]])   # Estado original associado a primeira saída
+            for n in range(1, len(saidas)):       # A primeira saída está associada para o estado original, n-1 estados novos serão criados e associados as saídas sobressalentes
+                ns = i + apost      # Novo estado = estado + '
+                apost += "\'"
+                newStates.append(ns)        # Novo estado criado, adicionado
+                out_fn.append([ns,saidas[n]])
+                if i in meaMachine['finals']:       # Caso o estado original seja final, o novo estado criado derivado também é final
+                    finalStates.append(ns)
+        elif len(saidas) == 1:       # Caso o estado tenha apenas uma saída
+            out_fn.append([i,saidas[0]])
+        else:
+            out_fn.append([i, saidas])  # No caso de saídas vazias
+
+    return newStates,finalStates, out_fn
+
+# Função auxiliar que trata das transições
+def _transMoore(meaMachine, newMoore):
+    return 0
+
+# Recebe um dicionário no formato Mealy e retorna um dicionário no formato Moore
+def mealyToMoore1(meaMachine):
+    if isMealy([meaMachine['type']]):
+        dic = meaMachine.copy()    # Cria cópia do dicionário para conversão
+        dic['type'] = 'moore'           # Novo dic é máquina de moore
+        del(dic['trans'])                   # As transições são diferentes, logo deleta-se do novo dicionário
+        newStates, finalStates,dic['out-fn'] = _estadosMoore(meaMachine) # Listas que guardarão respectivamentes novos estados finais
+        dic['states'] = list(set(dic['states'].extend(newStates))) # Adição dos estados usando set() para evitar repetições e forçando o tipo ser list()
+        dic['finals'] = list(set(dic['finals'].extend(finalStates)))
+
+
+
 
 
 
