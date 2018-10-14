@@ -41,12 +41,14 @@ def toDictionary(lst):
 
 # Recebe uma máquina no formato dicionário e converte para lista para ser parseada e escrita no arquivo de saída
 def toList(dict):
-    lstOut =[]
-    aux = []
-    lstOut.append(dict['type'])
+    lstOut =[dict['type'],'symbols-in','symbols-out','states','start','finals','trans']
+    for i in range(0,len(lstOut)):
+        lstOut[i].extend(dict[lstOut[i]])
+    if dict['type'] == 'moore':
+        lstOut.append('out-fn')
+        lstOut[7].extend(dict['out-fn'])
 
-
-
+    return lstOut
 
 # Verifica se a lista passada está em formato válido
 def isValid(lst):
