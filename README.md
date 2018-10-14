@@ -14,7 +14,8 @@ A estrutura do código é dividida em três arquivos:<br>
       <li><b>sexpression.pu -></b> Arquivo que possui o tratamento e manipulação de S-Expressions através do <b>Parser</b>.</li>
 
 ### 3. Procedimento para compilação<br>
-'''Tratar a compilação'''
+Para compilação do programa, deve-se seguir estes passos:<br>
+<li><li> Ter Python 3.5.2 instalado no sistema(link:https://filehippo.com/download_python/68783/).</li></li>
 
 ### 4. Conversor Mealy/Moore - Como usar<br>
 Para utilizar o programa desenvolvido, deve-se ter uma máquina de mealy ou moore em um <b>arquivo.txt</b>. Na linha de comando, indique o programa(ConversorMealyMoore), o arquivo de leitura e o arquivo de saída. Assim, terá como saída a máquina de entrada, convertida para o modo oposto(mealy ou moore).<br>
