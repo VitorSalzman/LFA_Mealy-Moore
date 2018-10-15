@@ -221,6 +221,8 @@ def mealyToMoore1(mealyMachine):
 				if(x[1] == y[0] and x[3] not in y): # adicionando saídas a estados no vetor auxiliar
 					y.append(x[3])
 		pos = 0
+		
+		#Cálculo de saídas para cada estado na máquina de Moore
 		for x in lst:
 			if(len(lst[pos]) == 1):
 				lst[pos].append('()')
