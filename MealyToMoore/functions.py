@@ -3,6 +3,8 @@ from sexpression import *
 
 # Função responsável por ler o arquivo de entrada, retorna uma lista resultante do parseamento do arquivo
 def readFile(arquivo):
+    lstMaq = None
+    arq = None
     try:
         arq = open("%s" % arquivo, 'r')
         lstMaq = parse_sexp(arq.read())
@@ -16,6 +18,7 @@ def readFile(arquivo):
 
 # Função de saída do programa, escreve no arquivo pré-definido;
 def writeFile(lst, arquivo):
+    arq = None
     try:
         arq = open("%s" % arquivo, 'w')
     except:
@@ -80,8 +83,8 @@ def isMoore(lst):
 # Recebe uma máquina de Moore (já em formato de dicionário) e verifica se é conversível para M. de Mealy
 def isConversible(mooMachine):
     if mooMachine['type'] == 'moore':
-        sIni = mooMachine['start']
-        for tst in mooMachine['out-fn'].values():
+        sIni = mooMachine['start'][0]
+        for tst in mooMachine['out-fn']:
             if tst[0] == sIni and tst[1] == []:
                 return True
         return False
@@ -96,6 +99,7 @@ def mooreToMealy(mooMachine):
         lstoutfn=mooMachine['out-fn']       # Saídas de cada estado
         lstnewtrans=[]                      # Lista com novas transições
         dic=mooMachine.copy()               # Copia a máquina, os únicos campos a serem tratados são trans e out-fn
+        dic['type'] = 'mealy'
 
         # Percorre as listas de transição de Moore
         for i in lstoldtrans:
@@ -103,7 +107,7 @@ def mooreToMealy(mooMachine):
             for j in lstoutfn:
                 # Verifica o estado-destino da transição e adiciona sua saída na transição de Mealy
                 if i[1] == j[0]:
-                    lstnewtrans.append((i[0],i[1],i[2],j[1]))
+                    lstnewtrans.append([i[0],i[1],i[2],j[1]])
 
         # Atualizando o novo dicionário
         del(dic['trans'])
