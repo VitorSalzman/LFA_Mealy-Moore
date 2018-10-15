@@ -1,14 +1,18 @@
 from functions import *
+lstMaqIn = readFile('mealy1.txt')
+arqConv = 'bbbb.txt'
 
-lst = readFile('testes.txt')
-print(lst)
-d = toDictionary(lst)
-print(d)
-l1 = mooreToMealy(d)
+if isMealy(lstMaqIn):
+    maqMealy = toDictionary(lstMaqIn)
+    maqMoore = mealyToMoore1(maqMealy)
+    print(maqMoore)
+    lstMoore = toList(maqMoore)
+    #writeFile(lstMoore, arqConv)'''
 
-print (l1)
-cu = toList(l1)
-
-writeFile(cu,'umteste.txt')
-
-# isso é um arquivo de testes
+elif isMoore(lstMaqIn):
+    maqMoore = toDictionary(lstMaqIn)
+    maqMealy = mooreToMealy(maqMoore)
+    lstMealy = toList(maqMealy)
+    writeFile(lstMealy, arqConv)
+else:
+    print("Erro, tipo de máquina inválida")

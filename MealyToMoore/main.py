@@ -18,13 +18,13 @@ def main(args):
             maqMealy = toDictionary(lstMaqIn)
             maqMoore = mealyToMoore(maqMealy)
             lstMoore = toList(maqMoore)
-            writeFile(lstMoore,'aqrv.txt')
+            writeFile(lstMoore,arqConv)
 
         elif isMoore(lstMaqIn):
             maqMoore = toDictionary(lstMaqIn)
             maqMealy = mooreToMealy(maqMoore)
             lstMealy = toList(maqMealy)
-            writeFile(lstMealy,'arqv2.txt')
+            writeFile(lstMealy,arqConv)
         else:
               print("Erro, tipo de máquina inválida")
 

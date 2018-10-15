@@ -2,6 +2,7 @@
   <dictionary name="Serenna">
     <words>
       <w>adicionando</w>
+      <w>armazena</w>
       <w>auxiliar</w>
       <w>caso</w>
       <w>chave</w>
@@ -13,13 +14,18 @@
       <w>dicionário</w>
       <w>diferenciar</w>
       <w>diferentes</w>
+      <w>entrada</w>
+      <w>erro</w>
+      <w>esperado</w>
       <w>estado</w>
       <w>estados</w>
       <w>fazer</w>
       <w>finais</w>
       <w>formato</w>
       <w>função</w>
+      <w>guardada</w>
       <w>guardará</w>
+      <w>inválida</w>
       <w>inválido</w>
       <w>lista</w>
       <w>listas</w>
@@ -34,6 +40,7 @@
       <w>saída</w>
       <w>saídas</w>
       <w>tipo</w>
+      <w>transição</w>
       <w>transições</w>
       <w>trata</w>
       <w>vazias</w>
