@@ -230,7 +230,7 @@ def mealyToMoore1(mealyMachine):
 		#Cálculo de saídas para cada estado na máquina de Moore
 		for x in lst:
 			if(len(lst[pos]) == 1):
-				lst[pos].append('()') #Adicionando transição vazia para estados sem saída
+				lst[pos].append('()') #Adicionando transição vazia para estado inicial
 			elif(len(lst[pos]) > 2):
 				i = 0
 				string = ''
