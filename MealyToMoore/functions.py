@@ -186,6 +186,9 @@ def _estadosMoore(meaMachine):
     # Percorre todos os estados
     for i in meaMachine['states']:
         saidas = []
+
+        if i == meaMachine['start']:
+            saidas.append([])
         # Percorre todos os "estados-destino" das transições
         for j in meaMachine['trans'][1]:
             # Ao achar o estado atual como destino de uma transição, pega-se a saída
