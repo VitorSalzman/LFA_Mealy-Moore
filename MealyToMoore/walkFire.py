@@ -1,6 +1,13 @@
-a = [1,2]
+from functions import *
 
-b = []
+lst = readFile('moore1.txt')
+print(lst)
+d = toDictionary(lst)
+print(d)
+l1 = toList(d)
 
-a.append(b)
-print(a)
+print (l1)
+
+writeFile(l1,'umteste.txt')
+
+# isso é um arquivo de testes

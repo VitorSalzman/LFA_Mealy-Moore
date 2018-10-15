@@ -34,18 +34,18 @@ def toDictionary(lst):
         dic = {'type': lst[0], 'symbols-in': lst[1][1:], 'symbols-out': lst[2][1:], 'states': lst[3][1:],
                'start': lst[4][1:], 'finals': lst[5][1:], 'trans': lst[6][1:]}
         if (isMoore(lst)):
-            dic['out_fn'] = lst[7][1:]
+            dic['out-fn'] = lst[7][1:]
         return dic
     else:
         print("Máquina no formato inválido.")
 
 # Recebe uma máquina no formato dicionário e converte para lista para ser parseada e escrita no arquivo de saída
 def toList(dict):
-    lstOut =[dict['type'],'symbols-in','symbols-out','states','start','finals','trans']
-    for i in range(0,len(lstOut)):
-        lstOut[i].extend(dict[lstOut[i]])
+    lstOut =[dict['type'],['symbols-in'],['symbols-out'],['states'],['start'],['finals'],['trans']]
+    for i in range(1,len(lstOut)):
+        lstOut[i].extend(dict[lstOut[i][0]])
     if dict['type'] == 'moore':
-        lstOut.append('out-fn')
+        lstOut.append(['out-fn'])
         lstOut[7].extend(dict['out-fn'])
 
     return lstOut
@@ -211,7 +211,7 @@ def _estadosMoore(meaMachine):
         else:
             out_fn.append([i, saidas])  # No caso de saídas vazias
 
-    return newStates,finalStates, out_fn
+    return newStates,finalStates, out-fn
 
 # Função auxiliar que trata das transições
 def _transMoore(meaMachine, newMoore):
