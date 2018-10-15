@@ -45,13 +45,13 @@ def toDictionary(lst):
 
 
 # Recebe uma máquina no formato dicionário e converte para lista para ser parseada e escrita no arquivo de saída
-def toList(dict):
-    lstOut = [dict['type'], ['symbols-in'], ['symbols-out'], ['states'], ['start'], ['finals'], ['trans']]
+def toList(dic):
+    lstOut = [dic['type'], dic['symbols-in'], dic['symbols-out'], dic['states'], dic['start'], dic['finals'], dic['trans']]
     for i in range(1, len(lstOut)):
-        lstOut[i].extend(dict[lstOut[i][0]])
-    if dict['type'] == 'moore':
-        lstOut.append(['out-fn'])
-        lstOut[7].extend(dict['out-fn'])
+        lstOut[i].extend(dic[lstOut[i][0]])
+    if dic['type'] == 'moore':
+        lstOut.append(dic['out-fn'])
+        lstOut[7].extend(dic['out-fn'])
 
     return lstOut
 
@@ -122,7 +122,8 @@ def mooreToMealy(mooMachine):
         del (dic['trans'])
         del (dic['out-fn'])
         dic['trans'] = lstnewtrans
-
+        print(dic['type'])
+        
         return dic
 
     else:
@@ -130,65 +131,6 @@ def mooreToMealy(mooMachine):
         return mooMachine
 
 
-# Recebe um dicionário no formato Mealy e retorna um dicionário no formato Moore
-def mealyToMoore(meaMachine):
-    if isMealy([meaMachine['type']]):
-        dic = meaMachine.copy()
-        del (dic['trans'])
-        lstoldstates = meaMachine['states']
-
-        lst = []
-
-        # for x in lstoldstates:
-        #     if(x[0] == meaMachine['start']:
-        #         x.append('()')
-        #
-        # for x in meaMachine['trans']:
-        #     for y in lstoldstates:
-        #         if(x[1]	== y[0] and x[3] not in state):
-        #             y.append(x[3])
-        #
-        # aux = 0
-        # for x in lstoldstates:
-        #     if(len(lstoldstates[aux])== 1):
-        #        lstoldstates[aux].append('()')
-        #     elif(len(lstoldstates[aux]) > 2):
-        #         strinaux = ''
-        #         for y in lstoldstates[aux]:
-        #             if(y[:1] != 'q'):
-        #                 lstoldstates[aux][0] += strinaux #incrementa o a string para diferenciar
-        #                 lstoldstates.append([lstoldstates[aux][0],y]) #adiciona no aux no seguinte formato [estado,val]
-        #                 str_aux += '`'
-        #         del lstoldstates[aux]
-        #         continue
-        #     aux += 1
-        #
-        # for x in lstoldstates:
-        #     dic['out-fn']=[]
-        #     dic('out-fn'].append(x)
-        #
-        #
-        # for x in lstoldstates:
-        #     dic['states'].append(x[0])
-        #
-        # for x in meaMachine['finals']:
-        #     for y in meaMachine['out-fn']:
-        #         if (x == y[0][:2]):
-        #             dic['finals'].append(y[0])
-        #
-        # for x in dic['states']:
-        #     for y in meaMachine['trans']:
-        #         for z in dic['out-fn']:
-        #             if(x[:2] == y[0][:2]):
-        #                 if(y[1] == z[0][:2] and y[3] == z[1]):
-        #                     dic['trans'].append([x,z[0],y[2]])
-
-        return dic
-
-
-
-    else:
-        print('Não foi possível fazer conversão. Tipo de máquina inválido.')
 
 
 # Função auxiliar para tratar a criação de novos estados na conversão de Me pra Mo
@@ -241,7 +183,7 @@ def _transMoore(meaMachine, newMoore):
 
 
 # Recebe um dicionário no formato Mealy e retorna um dicionário no formato Moore
-def mealyToMoore1(meaMachine):
+'''def mealyToMoore1(meaMachine):
     if isMealy([meaMachine['type']]):
         dic = meaMachine.copy()  # Cria cópia do dicionário para conversão
         dic['type'] = 'moore'  # Novo dic é máquina de moore
@@ -256,3 +198,66 @@ def mealyToMoore1(meaMachine):
 
     else:
         print('Não foi possível fazer conversão. Tipo de máquina inválido.')
+'''
+
+def mealyToMoore1(mealyMachine):
+	
+	if isMealy([mealyMachine['type']]): #Validação de máquina de mealy
+		#Criação de máquina de Moore
+		mooreMachine={}
+		mooreMachine['type'] = 'moore'
+		mooreMachine['symbols-in'] = mealyMachine['symbols-in']
+		mooreMachine['symbols-out'] = mealyMachine['symbols-out']
+		mooreMachine['start'] = mealyMachine['start']
+		mooreMachine['states'] = []
+		mooreMachine['finals'] = []
+		mooreMachine['trans'] = []
+		lst = []
+		for x in mealyMachine['states']:  #criando vetor auxiliar com estados da máquina de mealy 
+			lst.append([x])
+
+		for x in mealyMachine['trans']:
+			for y in lst:
+				if(x[1] == y[0] and x[3] not in y): # adicionando saídas a estados no vetor auxiliar
+					y.append(x[3])
+		pos = 0
+		for x in lst:
+			if(len(lst[pos]) == 1):
+				lst[pos].append('()')
+			elif(len(lst[pos]) > 2):
+				i = 0
+				string = ''
+				for y in lst[pos]:
+					if(i > 0):
+						lst[pos][0] += string
+						lst.append([lst[pos][0],y])
+						string += '`'
+						i+=1
+				del lst[pos]
+				continue
+			pos = pos+1
+			
+
+		mooreMachine['out-fn'] = lst
+		
+		for x in lst:
+			mooreMachine['states'].append(x[0])
+		
+		for x in mealyMachine['finals']:
+			for y in mooreMachine['out-fn']:
+				if(x == y[0][:2]):
+					mooreMachine['finals'].append(y[0])
+			
+		for x in mealyMachine['trans']:
+			for y in mooreMachine['out-fn']:
+				if(x[1] == y[0][:2]):
+					if(x[3] == y[1]):
+						mooreMachine['trans'].append([x[0],y[0],x[2]])
+						
+	
+		return mooreMachine		
+				
+
+	else:
+		print('Não foi possível fazer conversão. Tipo de máquina inválido.')
+		return mealyMachine

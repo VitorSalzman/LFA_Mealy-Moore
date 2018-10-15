@@ -1,12 +1,14 @@
 from functions import *
-lstMaqIn = readFile('mealy1.txt')
+lstMaqIn = readFile('mealy2.txt')
 arqConv = 'bbbb.txt'
 
 if isMealy(lstMaqIn):
     maqMealy = toDictionary(lstMaqIn)
     maqMoore = mealyToMoore1(maqMealy)
+    
     print(maqMoore)
-    lstMoore = toList(maqMoore)
+    
+   # lstMoore = toList(maqMoore)
     #writeFile(lstMoore, arqConv)'''
 
 elif isMoore(lstMaqIn):
