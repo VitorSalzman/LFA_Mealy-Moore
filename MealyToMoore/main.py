@@ -15,11 +15,18 @@ def main(args):
         lstMaqIn = readFile(arqMaq)
 
         if isMealy(lstMaqIn):
-            ''' Call functions'''
+            maqMealy = toDictionary(lstMaqIn)
+            maqMoore = mealyToMoore(maqMealy)
+            lstMoore = toList(maqMoore)
+            writeFile(lstMoore)
+
         elif isMoore(lstMaqIn):
-            '''DO THE STUFF'''
-
-
+            maqMoore = toDictionary(lstMaqIn)
+            maqMealy = mooreToMealy(maqMoore)
+            lstMealy = toList(maqMealy)
+            writeFile(lstMealy)
+        else:
+              print("Erro, tipo de máquina inválida")
 
 if __name__ == '__main__':
     main(argv)
