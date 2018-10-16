@@ -1,0 +1,1 @@
+(moore (symbols-in a b) (symbols-out a b) (states p0 p q p q p) (start q0) (finals p0 p0) (trans) (out-fn (p0 b ()) p0'' q''' p0' q'' p'''))

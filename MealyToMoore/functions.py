@@ -46,15 +46,15 @@ def toDictionary(lst):
 
 # Recebe uma máquina no formato dicionário e converte para lista para ser parseada e escrita no arquivo de saída
 def toList(dic):
-    lstOut = [dic['type'], dic['symbols-in'], dic['symbols-out'], dic['states'], dic['start'], dic['finals'], dic['trans']]
+    lstOut = [dic['type'], ['symbols-in'], ['symbols-out'], ['states'], ['start'], ['finals'], ['trans']]
     
-    '''for i in range(1, len(lstOut)):           #Retirado pois estava dando erro. A retirada não impactou no resultado
+    for i in range(1, len(lstOut)):           #Retirado pois estava dando erro. A retirada não impactou no resultado
         lstOut[i].extend(dic[lstOut[i][0]])
-'''
+
 		
     if dic['type'] == 'moore':
-        lstOut.append(dic['out-fn'])
-        #lstOut[7].extend(dic['out-fn'])              #Retirado pois está duplicando 'out-fn'
+        lstOut.append(['out-fn'])
+        lstOut[7].extend(dic['out-fn'])
 
     return lstOut
 
@@ -125,7 +125,7 @@ def mooreToMealy(mooMachine):
         del (dic['trans'])
         del (dic['out-fn'])
         dic['trans'] = lstnewtrans
-        print(dic['type'])
+
         
         return dic
 
@@ -136,42 +136,39 @@ def mooreToMealy(mooMachine):
 
 
 
-# Função auxiliar para tratar a criação de novos estados na conversão de Me pra Mo
-def _estadosMoore(meaMachine):                                                       #por enquanto, SEM UTILIZAÇÃO
-    newStates = []  # Lista que guardará novos estados criados
-    finalStates = []  # Lista com novos estados finais
-    out_fn = []  # Lista com relação estado/saída
+# Função auxiliar para tratar novos estados na conversão de Me pra Mo
+def _estadosMoore(meaMachine):
+    states = []
 
-    # Percorre todos os estados
-    for i in meaMachine['states']:
-        saidas = []
+    for dino in  meaMachine['states']: # Lista que guardará novos estados criado
+        states.append([dino])
 
+    # Tratamento de estado inicial
+    for i in states:
         if i == meaMachine['start']:
-            saidas.append([])
-        # Percorre todos os "estados-destino" das transições
-        for j in meaMachine['trans'][1]:
-            # Ao achar o estado atual como destino de uma transição, pega-se a saída
-            if i == j:
-                if meaMachine['trans'][3] not in saidas:  # Sem repetí-la
-                    saidas.append(meaMachine['trans'][3])
-        # Caso um estado seja destino de mais de uma saída das transições de mealy, cria-se novos estados para cada saída distinta
-        if len(saidas) > 1:
-            apost = "\'"  # Apóstrofo para diferenciar novos estados
-            out_fn.append([i, saidas[0]])  # Estado original associado a primeira saída
-            for n in range(1, len( saidas)):  # A primeira saída está associada para o estado original, n-1 estados novos serão criados e associados as saídas sobressalentes
-                ns = i + apost  # Novo estado = estado + '
-                apost += "\'"
-                print(ns)
-                newStates.append(ns)  # Novo estado criado, adicionado
-                out_fn.append([ns, saidas[n]])
-                if i in meaMachine['finals']:  # Caso o estado original seja final, o novo estado criado derivado também é final
-                    finalStates.append(ns)
-        elif len(saidas) == 1:  # Caso o estado tenha apenas uma saída
-            out_fn.append([i, saidas[0]])
-        else:
-            out_fn.append([i, saidas])  # No caso de saídas vazias
+            i.append('[]') # estado inicial tem saída vazia
 
-    return newStates, finalStates, out_fn
+    # Analisa saída das transições e adiciona nos estados
+    for j in meaMachine['trans']:
+        for s in states:
+            if j[1] == s[0] and j[3] not in s:  # se estado de destino é o estado já listado e ainda não foi adicionado saída
+                s.append(j[3])          # Adiciona a saída
+
+    print("estados>",states)
+    for i in range(0,len(states)):
+        print('states[i]',i, states[i])
+        if len(states[i]) == 1:     # se o estado não tiver valor nenhum associado, saída vazia
+            states[i].append("[]")
+        elif len(states[i])>2:      # um estado pode ter apenas uma saída, se tiver mais de uma, surgem novos estados
+            apost = "\'"
+            for v in range(0,len(states[i])):
+                novoEstado = states[v][0] + apost
+                states.append(novoEstado,)
+                apost+="\'"
+            del states[i]
+    return states
+
+
 
 
 # Função auxiliar que trata das transições
@@ -186,22 +183,31 @@ def _transMoore(meaMachine, newMoore):         #por enquanto, SEM UTILIZAÇÃO
 
 
 # Recebe um dicionário no formato Mealy e retorna um dicionário no formato Moore
-'''def mealyToMoore1(meaMachine):           #CODIGO DE SERENNA
-    if isMealy([meaMachine['type']]):
-        dic = meaMachine.copy()  # Cria cópia do dicionário para conversão
-        dic['type'] = 'moore'  # Novo dic é máquina de moore
-        del (dic['trans'])  # As transições são diferentes, logo deleta-se do novo dicionário
-        newStates, finalStates, dic['out-fn'] = _estadosMoore(meaMachine)  # Listas que guardarão respectivamentes novos estados finais
-        dic['states'] = list(set(dic['states'].extend(newStates)))  # Adição dos estados usando set() para evitar repetições e forçando o tipo ser list()
-        dic['finals'] = list(set(dic['finals'].extend(finalStates)))
-        dic = _transMoore(meaMachine,dic)
+def mealyToMoore(meaMachine):
+    moore = meaMachine.copy()  # Cria cópia do dicionário para conversão
+    moore['type'] = 'moore'
+    moore['states'] = []
+    moore['out-fn'] = _estadosMoore(meaMachine)  # Estados com saída
+    moore['trans'] = []  # Limpa as transições no novo dicionário
 
-        return dic
+    for i in moore['out-fn']:
+        moore['states'].append(i[0])    # Adiciona os estados para a nova máquina
 
+    # Adiciona possíveis novos estados finais
+    for out in moore['states']:
+        if out[0:2] in meaMachine['finals']:
+            moore['finals'].append(out)
 
-    else:
-        print('Não foi possível fazer conversão. Tipo de máquina inválido.')
-'''
+    # Tratando
+    for stt in moore['states']:
+        for transi in meaMachine['trans']:
+            for sttO in moore['out-fn']:
+                if (stt[0:2] == transi[0][0:2]):
+                    if(transi[1] == sttO[0][0:2] and transi[3] == sttO[1]):
+                        moore['trans'].append([stt,sttO[0],transi[2]])
+
+    return moore
+
 
 # Recebe um dicionário no formato Mealy e retorna um dicionário no formato Moore
 def mealyToMoore1(mealyMachine):
