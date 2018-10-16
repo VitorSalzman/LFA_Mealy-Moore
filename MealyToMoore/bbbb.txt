@@ -1,1 +1,0 @@
-(moore (a b) (a b) (q0 p0) (q0) (p0) ((q0 p0 b) (q0 q0 a) (p0 q0 a)) ((q0 a) (p0 b)))

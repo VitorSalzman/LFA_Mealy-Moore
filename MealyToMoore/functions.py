@@ -154,22 +154,20 @@ def _estadosMoore(meaMachine):
             if j[1] == s[0] and j[3] not in s:  # se estado de destino é o estado já listado e ainda não foi adicionado saída
                 s.append(j[3])          # Adiciona a saída
 
-    print("estados>",states)
-    for i in range(0,len(states)):
-        print('states[i]',i, states[i])
+    i = 0
+    while i < len(states):
         if len(states[i]) == 1:     # se o estado não tiver valor nenhum associado, saída vazia
             states[i].append("[]")
         elif len(states[i])>2:      # um estado pode ter apenas uma saída, se tiver mais de uma, surgem novos estados
             apost = "\'"
-            for v in range(0,len(states[i])):
-                novoEstado = states[v][0] + apost
-                states.append(novoEstado,)
+            for v in range(1,len(states[i])):
+                novoEstado = states[i][0] + apost
+                states.append([novoEstado,states[i][v]])        # lista
                 apost+="\'"
             del states[i]
+            continue        # evita incrementar pois len acaba mudando
+        i+= 1
     return states
-
-
-
 
 # Função auxiliar que trata das transições
 def _transMoore(meaMachine, newMoore):         #por enquanto, SEM UTILIZAÇÃO
@@ -207,80 +205,3 @@ def mealyToMoore(meaMachine):
                         moore['trans'].append([stt,sttO[0],transi[2]])
 
     return moore
-
-
-# Recebe um dicionário no formato Mealy e retorna um dicionário no formato Moore
-def mealyToMoore1(mealyMachine):
-	
-	if isMealy([mealyMachine['type']]): #Validação de máquina de mealy
-		#Criação de máquina de Moore
-		mooreMachine={}
-		mooreMachine['type'] = 'moore'
-		mooreMachine['symbols-in'] = mealyMachine['symbols-in']
-		mooreMachine['symbols-out'] = mealyMachine['symbols-out']
-		mooreMachine['start'] = mealyMachine['start']
-		mooreMachine['states'] = []
-		mooreMachine['finals'] = []
-		mooreMachine['trans'] = []
-		lst = []
-		for x in mealyMachine['states']:  #criando vetor auxiliar com estados da máquina de mealy 
-			lst.append([x])
-			
-		print(lst)
-		for x in mealyMachine['trans']:
-			for y in lst:
-				if(x[1] == y[0] and x[3] not in y): # adicionando saídas a estados no vetor auxiliar
-					y.append(x[3])
-		pos = 0
-		
-		#Cálculo de saídas para cada estado na máquina de Moore
-		for x in lst:
-			if(len(lst[pos]) == 1):
-				lst[pos].append('()') #Adicionando transição vazia para estado inicial
-			elif(len(lst[pos]) > 2):
-				i = 0
-				string = ''
-				for y in lst[pos]:
-					if(i > 0):
-						lst[pos][0] += string
-						lst.append([lst[pos][0],y])
-						string += '`'
-						i+=1
-				#del lst[pos]          Retirado pois estava sumindo com o ultimo estado
-				continue
-			pos = pos+1
-			
-
-		mooreMachine['out-fn'] = lst
-		
-		for x in lst:
-			mooreMachine['states'].append(x[0])
-		
-		for x in mealyMachine['finals']: #Povoando os estados finais utilizando os estados armazenados em 'out-fn'
-			for y in mooreMachine['out-fn']:
-				if(x == y[0][:2]):
-					mooreMachine['finals'].append(y[0])
-			
-		for x in mealyMachine['trans']:
-			for y in mooreMachine['out-fn']:
-				if(x[1] == y[0][:2]):
-					if(x[3] == y[1]):
-						mooreMachine['trans'].append([x[0],y[0],x[2]])
-						
-		
-		'''               ESSA GAMBIARRA RESOLVE OS ESTADOS COM DUAS SAÍDAS(OUT-FN)!!!!!!!!!!!!!
-		lstout=[]
-		for x in mooreMachine['out-fn']:
-			if len(x) >2:
-				lstout.append(x[:2])
-			else:
-				lstout.append(x)	
-		mooreMachine['out-fn']=lstout		
-								
-	    '''
-		return mooreMachine		
-				
-
-	else:
-		print('Não foi possível fazer conversão. Tipo de máquina inválido.')
-		return mealyMachine
